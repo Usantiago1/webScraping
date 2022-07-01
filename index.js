@@ -6,19 +6,23 @@ const fs = require('fs-extra');
 
    async function init (){
         const $ =  await  request({
-            uri: 'http://quotes.toscrape.com/',
-            transform: body => cheerio.load(body)
+            uri: 'https://www.eluniversal.com.mx/estados',
+            transform: body => cheerio.load(body),
+
         });
 
-        writeStream.write('Quote|Autor|Tags\n');
-        $('.quote').each((i, el) => {
-            const text = $(el).find('span.text').text().replace(/(^\“|\”$)/g, "");
-            const author = $(el).find('span small.author').text();
-            //const tag = $(el).find('.tags a').hmtl();
+        writeStream.write('Estado|Mundo|Tags\n');
+        $('.ce3-Tipo3').each((i, el) => {
+            const news = $(el).find('p').text();
+            console.log(news);
             const tags = [];
             $(el).find('.tags a.tag').each((i, el) => tags.push($(el).text()));
-            writeStream.write(`${text}|${author}|${tags}\n`);
+            writeStream.write(`${news}}|${tags}\n`);
 
+        })
+        $('.ce3-Tipo1').each((i, el)=>{
+            const titlenews = $(el).find('p').text();
+            console.log(titlenews);
         })
     }
     init();
